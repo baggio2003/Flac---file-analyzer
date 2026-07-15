@@ -1,53 +1,51 @@
 FLAC Quality Analyzer
 
-Un analizzatore avanzato scritto in Python per verificare l'effettiva qualità dei file audio FLAC. Questo script esegue tre controlli principali:
+An advanced Python script designed to verify the true quality of FLAC audio files. This script performs three main checks:
 
-Lettura dei metadati (risoluzione, bitrate, frequenza di campionamento).
+    Metadata extraction (resolution, bitrate, sample rate).
 
-Verifica dell'integrità strutturale tramite lo strumento ufficiale flac per rilevare file corrotti.
+    Structural integrity verification using the official flac command-line tool to detect corrupted files.
 
-Analisi spettrale (FFT) per rilevare eventuali "falsi FLAC" (file MP3 upscalati e mascherati da formato lossless).
+    Spectral analysis (FFT) to identify "fake FLACs" (upscaled MP3 files disguised as lossless format).
 
-Al termine dell'esecuzione, lo script genera automaticamente un report dettagliato in formato CSV.
+Upon completion, the script automatically generates a detailed report in CSV format.
+⚙️ System Requirements
 
+Before setting up the Python environment, make sure you have the necessary base libraries for audio analysis installed on your system.
 
-⚙️ Requisiti di Sistema
+On Arch Linux-based distributions (including CachyOS), open the terminal and run:
+Bash
 
-Prima di configurare l'ambiente Python, assicurati di avere installato nel tuo sistema le librerie di base necessarie per l'analisi audio.
+sudo pacman -S libsndfile flac
 
-Sulle distribuzioni basate su Arch Linux (incluso CachyOS), apri il terminale ed esegui:
+    Note: libsndfile is essential for the Python soundfile module to work, while the flac package provides the native command used by the script to test frame integrity.
 
-    Bash
-        sudo pacman -S libsndfile flac
+🐍 Python Dependencies Installation
 
-Nota: libsndfile è essenziale per far funzionare il modulo Python soundfile, mentre il pacchetto flac fornisce il comando nativo utilizzato dallo script per testare l'integrità dei frame.
+Ensure the requirements.txt file is located in the same directory as the script. Install all necessary libraries via pip (if you are using a virtual environment like venv, remember to activate it first):
+Bash
 
-🐍 Installazione Dipendenze Python
+pip install -r requirements.txt
 
-Assicurati di avere il file requirements.txt nella stessa cartella dello script. Installa tutte le librerie necessarie tramite pip (se utilizzi ambienti virtuali come venv, ricordati di attivarlo prima):
+This command will install:
 
-    Bash
-        pip install -r requirements.txt
+    numpy and soundfile (for spectral analysis).
 
-Questo comando installerà:
+    mutagen (for fast metadata reading).
 
-    numpy e soundfile (per l'analisi spettrale)
+    tqdm (for the on-screen progress bar).
 
-    mutagen (per la lettura rapida dei metadati)
+🚀 How to Use the Script
 
-    tqdm (per la barra di progressione a schermo)
+Once all requirements are met, you can launch the analyzer directly from the terminal:
+Bash
 
-🚀 Come usare lo script
+python analyzer.py
 
-Una volta soddisfatti tutti i requisiti, puoi avviare l'analizzatore direttamente da terminale:
+    The script will prompt you to enter the path of the folder containing your music.
 
-    Bash
-        python analyzer.py
+    You can enter an absolute path (e.g., /home/username/Music/) or a relative one.
 
-Lo script ti chiederà di inserire il percorso della cartella contenente la tua musica.
+    The analyzer will recursively scan all subfolders to find every .flac file.
 
-Puoi inserire un percorso assoluto (es. /home/nome-utente/Musica/) o relativo.
-
-L'analizzatore scansionerà ricorsivamente tutte le sottocartelle trovando ogni file .flac.
-
-Al termine, troverai il file flac_quality_report.csv salvato direttamente all'interno della cartella che hai appena analizzato.
+    When finished, you will find the flac_quality_report.csv file saved directly inside the folder you just analyzed.
